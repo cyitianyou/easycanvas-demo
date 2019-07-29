@@ -1,0 +1,69 @@
+<head>
+    <script src="./easycanvas.standalone.prod.js"></script>
+    <script src="./plugin.webgl.standalone.prod.js"></script>
+    <script src="./utils.js"></script>
+</head>
+
+
+<body>
+    <canvas id="app"></canvas>
+
+    <script>
+    </script>
+    <script>
+        var $app = new Easycanvas.Painter({
+            el: '#app',
+            width: 800,
+            height: 600,
+            webgl: true, // 开启WebGL渲染
+        });
+        $app.start();
+        // 添加背景图
+        $app.add(new Easycanvas.Sprite({
+            style: {
+                left: 0,
+                top: 0,
+                zIndex: 3
+            },
+            webgl: Easycanvas.webglShapes.custom({
+                indices: [0, 1, 2, 0, 2, 3],
+                textures: [1, 0, 0, 0, 0, 1, 1, 1],
+                vertices: [800, 0, 0, 0, 0, 0, 0, -600, 0, 800, -600, 0],
+                rz: 180,
+                ry: 180,
+                img: "./20101211010303.jpg"
+            })
+        }));
+        // 组件坐标
+        var lt = [100, -200],
+            lb = [200, -300],
+            rb = [400, -300],
+            rt = [400, -200];
+        // 添加组件
+        Easycanvas.ImgLoader('./BC4-P1-D2-1-1.png', (img) => {
+            var $letterG = new Easycanvas.Sprite({
+                style: {
+                    left: 0,
+                    top: 0,
+                    zIndex: 1
+                },
+                webgl: Easycanvas.webglShapes.custom({
+                    indices: new Float32Array(createIndices(rt, lt, lb, rb)),
+                    textures: new Float32Array(createTextures(rt, lt, lb, rb)),
+                    vertices: new Float32Array(createVertices(rt, lt, lb, rb)),
+                    rz: 180,
+                    ry: 180,
+                    img: img
+                })
+            });
+            // 单击改变组件的左上顶点
+            $app.events.click = function(e) {
+                lt = [e.canvasX, 0 - e.canvasY];
+                $letterG.webgl.vertices = new Float32Array(createVertices(rt, lt, lb, rb));
+                $letterG.updateWebglStyle('vertices')
+            };
+
+            $app.add($letterG);
+        });
+    </script>
+</body>
