@@ -26,6 +26,7 @@
                 zIndex: 3
             },
             webgl: Easycanvas.webglShapes.custom({
+                hasAlpha: true, // 设置透明效果
                 indices: [0, 1, 2, 0, 2, 3],
                 textures: [1, 0, 0, 0, 0, 1, 1, 1],
                 vertices: [800, 0, 0, 0, 0, 0, 0, -600, 0, 800, -600, 0],
@@ -48,6 +49,7 @@
                     zIndex: 1
                 },
                 webgl: Easycanvas.webglShapes.custom({
+                    hasAlpha: true, // 设置透明效果
                     indices: new Float32Array(createIndices(rt, lt, lb, rb)),
                     textures: new Float32Array(createTextures(rt, lt, lb, rb)),
                     vertices: new Float32Array(createVertices(rt, lt, lb, rb)),
