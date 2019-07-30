@@ -9,7 +9,7 @@ function createArray(leftPoint, rightPoint) {
         result.push([
             leftPoint[0] + x * i / count,
             leftPoint[1] + y * i / count,
-            0
+            1
         ]);
     }
     return result;
